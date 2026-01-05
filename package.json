@@ -1,0 +1,30 @@
+{
+  "name": "cv",
+  "version": "0.0.0",
+  "description": "Ce fichier transforme votre espace de travail en un environnement Fullstack unifié. Vous n'avez plus besoin de vous soucier de démarrer chaque partie manuellement ; tout est centralisé pour faciliter le développement local.",
+  "keywords": [
+    "React.js",
+    "NestJS",
+    "MySQL"
+  ],
+  "homepage": "https://github.com/DFS-FredRX/CV#readme",
+  "bugs": {
+    "url": "https://github.com/DFS-FredRX/CV/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/DFS-FredRX/CV.git"
+  },
+  "license": "MIT",
+  "author": "DFS-FredRX",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev:client": "npm run dev --prefix client",
+    "dev:server": "npm run start:dev --prefix server",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
