@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 
 @Entity('user')
@@ -19,6 +20,7 @@ export class User {
     @Column({ length: 100, unique: true })
     email: string
 
+    @Exclude()
     @Column({ length: 255, select: false })
     hashed_password: string
 

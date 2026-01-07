@@ -18,11 +18,11 @@
     "migration:generate": "npm run typeorm migration:generate -- -d src/config/migration.config.ts",
     "migration:up": "npm run typeorm migration:run -- -d src/config/migration.config.ts",
     "migration:down": "npm run typeorm migration:revert -- -d src/config/migration.config.ts",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
+    "test": "jest --detectOpenHandles --forceExit",
+    "test:watch": "jest --watch --detectOpenHandles --forceExit",
+    "test:cov": "jest --coverage --detectOpenHandles --forceExit",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json --detectOpenHandles --forceExit"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
