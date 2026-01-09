@@ -1,7 +1,7 @@
 import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseInterceptors } from '@nestjs/common';
 import { UserService } from '../service/user.service';
-import { CreateUserDTO } from '../entity/createUser.dto';
-import { UpdateUserDTO } from '../entity/updateUser.dto';
+import { CreateUserDTO } from '../dto/createUser.dto';
+import { UpdateUserDTO } from '../dto/updateUser.dto';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('user')

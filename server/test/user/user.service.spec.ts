@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserService } from './user.service';
+import { UserService } from 'src/user/service/user.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from '../entity/user.entity';
+import { User } from 'src/user/entity/user.entity';
 import { ConflictException, NotFoundException } from '@nestjs/common';
 
 describe('UserService', () => {

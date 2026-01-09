@@ -1,22 +1,33 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { AppModule } from '../../app.module';
+import { AppModule } from '../../src/app.module';
 import request from 'supertest';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { typeOrmTestConfig } from '../setup-typeorm';
 import { DataSource } from 'typeorm';
 
 describe('UserController', () => {
 
   let app: INestApplication
+  let dataSource: DataSource
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule]
-    }).compile();
+    })
+    .overrideModule(TypeOrmModule)
+    .useModule(TypeOrmModule.forRoot(typeOrmTestConfig))
+    .compile();
 
     app = moduleFixture.createNestApplication()
     app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
     await app.init()
-  });
+    dataSource = app.get(DataSource)
+  })
+
+  beforeEach(async () => {
+    await dataSource.synchronize(true)
+  })
 
   describe('POST /user', () => {
 
@@ -54,11 +65,24 @@ describe('UserController', () => {
 
   describe('PATCH /user/:id', () => {
 
-    it('devrait mettre à jour le prénom', () => {
+    it('devrait mettre à jour le prénom', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/user')
+        .send({
+          firstname: 'Alice',
+          lastname: 'Wonder',
+          username: 'alice_w',
+          email: 'alice@test.com',
+          password: 'password123'
+        })
+      const userId = response.body.id
       return request(app.getHttpServer())
-        .patch('/user/1')
+        .patch(`/user/${userId}`)
         .send({ firstname: 'Alice-Updated' })
         .expect(200)
+        .expect((res) => {
+          expect(res.body.firstname).toEqual('Alice-Updated')
+        })
     })
 
   })
